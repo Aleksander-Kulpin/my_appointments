@@ -1,0 +1,194 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+<div id="centralGroup">
+    <!--Tab1 Search ////////////////////////////////////////////////////////////////////////-->
+    <div id="clientSearchTab">
+        <h3>Search</h3>
+        <div>
+            <input type="text" id="serviceFilter" onkeyup="serviceFilter()" placeholder="Filter by service.." title="Type in a name">
+            <input type="text" id="specialistFilter" onkeyup="specialistFilter()" placeholder="Filter by specialist.." title="Type in a name">
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Date</th>
+                    <th class="text-start">Time</th>
+                    <th class="text-start">Service</th>
+                    <th class="text-start">Specialist</th>
+                    <th class="text-start">Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in info_search %}
+                    <tr>
+                        <td class="text-start">{{ row["date"] }}</td>
+                        <td class="text-start">{{ row["time"] }}</td>
+                        <td class="text-start">{{ row["service"] }}</td>
+                        <td class="text-start">{{ row["specialist"] }}</td>
+                        <td class="text-start">{{ row["client"] }}</td>
+                        <td>
+                            <form action="/" method="post">
+                                <button class="btn btn-primary" type="submit">Book</button>
+                                <input id="id" name="id" type="hidden" value="{{ row['id'] }}">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--Tab2 Schedule ////////////////////////////////////////////////////////////////////////-->
+    <div id="clientScheduleTab" class="hidden">
+        <h3>Schedule for period</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Date</th>
+                    <th class="text-start">Time</th>
+                    <th class="text-start">Service</th>
+                    <th class="text-start">Specialist</th>
+                    <th class="text-start">Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in info_schedule_client %}
+                    <tr>
+                        <td class="text-start">{{ row["date"] }}</td>
+                        <td class="text-start">{{ row["time"] }}</td>
+                        <td class="text-start">{{ row["service"] }}</td>
+                        <td class="text-start">{{ row["specialist"] }}</td>
+                        <td class="text-start">{{ row["client"] }}</td>
+                     </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--Tab3 History ////////////////////////////////////////////////////////////////////////-->
+    <div id="clientHistoryTab" class="hidden">
+        <h3>History</h3>
+        <div>
+            <input type="text" id="serviceFilter2" onkeyup="serviceFilter2()" placeholder="Filter by service.." title="Type in a name">
+            <input type="text" id="specialistFilter2" onkeyup="specialistFilter2()" placeholder="Filter by specialist.." title="Type in a name">
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Date</th>
+                    <th class="text-start">Time</th>
+                    <th class="text-start">Service</th>
+                    <th class="text-start">Specialist</th>
+                    <th class="text-start">Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in info_history_client %}
+                    <tr>
+                        <td class="text-start">{{ row["date"] }}</td>
+                        <td class="text-start">{{ row["time"] }}</td>
+                        <td class="text-start">{{ row["service"] }}</td>
+                        <td class="text-start">{{ row["specialist"] }}</td>
+                        <td class="text-start">{{ row["client"] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</centralGroup>
+<aside>
+    <div class="sidenav">
+        <div class="container" id="testBig">
+            <h2>Client Portal</h2>
+            <div class="btn-group-vertical">
+                <button type="button" class="btn btn-primary"
+                    onclick="showFirstTableClient()">Search</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="showSecondTableClient()">Schedule</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="showThirdTableClient()">History</button>
+            </div>
+        </div>
+    </div>
+</aside>
+<script>
+    <!--Idea od the f_unction below was borrowed from https://stackoverflow.com/questions/51187477/how-to-filter-a-html-table-using-simple-javascript-->
+    <!--Similar fuctions are used on specialist.html and admin.html pages-->
+    function serviceFilter() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("serviceFilter");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("clientSearchTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function specialistFilter() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("specialistFilter");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("clientSearchTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[3];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function serviceFilter2() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("serviceFilter2");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("clientHistoryTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function specialistFilter2() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("specialistFilter2");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("clientHistoryTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[3];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+</script>
+
+{% endblock %}

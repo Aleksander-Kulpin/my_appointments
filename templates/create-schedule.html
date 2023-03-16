@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create a week schedule
+{% endblock %}
+
+{% block main %}
+    <h2>Create a week schedule for a specialist</h2>
+    <form action="/create_schedule" method="post">
+        <div class="mb-3">
+            <select name="specialist" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Specialist</option>
+                {% for specialist in list_specialists %}
+                    <option value="{{specialist['firstlast']}}">{{specialist['firstlast']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="startDate">Start date of the week (Sunday):</label>
+            <input type="date" id="start_date" name="start_date">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+
+{% endblock %}

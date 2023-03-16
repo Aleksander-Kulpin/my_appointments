@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create a template
+{% endblock %}
+
+{% block main %}
+    <h2>Create a week schedule for a specialist</h2>
+    <form action="/create_template" method="post">
+        <div class="mb-3">
+            <select name="specialist" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Specialist</option>
+                {% for specialist in list_specialists %}
+                    <option value="{{specialist['firstlast']}}">{{specialist['firstlast']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <select name="service" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Service</option>
+                {% for service in list_services %}
+                    <option value="{{service['name']}}">{{service['name']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <select name="day" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Day of week</option>
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="appt">Select a time:</label>
+            <input type="time" id="appt" name="appt">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+
+{% endblock %}

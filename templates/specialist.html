@@ -1,0 +1,155 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Specialist's Portal
+{% endblock %}
+
+{% block main %}
+<div id="centralGroup">
+    <div id="specialistRosterTab">
+        <h3>Schedule for period</h3>
+        <div>
+            <input type="text" id="serviceFilter" onkeyup="serviceFilter()" placeholder="Filter by service.." title="Type in a name">
+            <input type="text" id="clientFilter" onkeyup="clientFilter()" placeholder="Filter by client.." title="Type in a name">
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Date</th>
+                    <th class="text-start">Time</th>
+                    <th class="text-start">Service</th>
+                    <th class="text-start">Specialist</th>
+                    <th class="text-start">Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in info_roster %}
+                    <tr>
+                        <td class="text-start">{{ row["date"] }}</td>
+                        <td class="text-start">{{ row["time"] }}</td>
+                        <td class="text-start">{{ row["service"] }}</td>
+                        <td class="text-start">{{ row["specialist"] }}</td>
+                        <td class="text-start">{{ row["client"] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="specialistHistoryTab" class="hidden">
+        <h3>History</h3>
+        <div>
+            <input type="text" id="serviceFilter2" onkeyup="serviceFilter2()" placeholder="Filter by service.." title="Type in a name">
+            <input type="text" id="clientFilter2" onkeyup="clientFilter2()" placeholder="Filter by client.." title="Type in a name">
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Date</th>
+                    <th class="text-start">Time</th>
+                    <th class="text-start">Service</th>
+                    <th class="text-start">Specialist</th>
+                    <th class="text-start">Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in info_history %}
+                    <tr>
+                        <td class="text-start">{{ row["date"] }}</td>
+                        <td class="text-start">{{ row["time"] }}</td>
+                        <td class="text-start">{{ row["service"] }}</td>
+                        <td class="text-start">{{ row["specialist"] }}</td>
+                        <td class="text-start">{{ row["client"] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</centralGroup>
+<aside>
+    <div class="sidenav">
+        <div class="container" id="testBig">
+            <h2>Specialist Portal</h2>
+            <div class="btn-group-vertical">
+                <button type="button" class="btn btn-primary"
+                    onclick="showFirstTableSpecialist()">Schedule</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="showSecondTableSpecialist()">History</button>
+            </div>
+        </div>
+    </div>
+</aside>
+<script>
+    function serviceFilter() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("serviceFilter");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("specialistRosterTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function clientFilter() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("clientFilter");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("specialistRosterTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[4];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function serviceFilter2() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("serviceFilter2");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("specialistHistoryTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function clientFilter2() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("clientFilter2");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("specialistHistoryTab");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[4];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+</script>
+{% endblock %}

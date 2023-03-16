@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit user's account
+{% endblock %}
+
+{% block main %}
+    <h2>Edit user's account</h2>
+    <h3> User information:</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Name</th>
+                <th class="text-start">Specialist role</th>
+                <th class="text-start">Admin role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in user_edit %}
+                <tr>
+                    <td class="text-start">{{ row["username"] }}</td>
+                    <td class="text-start">{{ row["is_specialist"] }}</td>
+                    <td class="text-start">{{ row["is_admin"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form action="/create_edit_user" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username"
+             name="username" placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <select name="is_specialist" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Specialist Role</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <select name="is_admin" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Admin Role</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        {% for row in user_edit %}
+            <input id="id" name="id" type="hidden" value="{{ row['id'] }}">
+        {% endfor %}
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create an appointment
+{% endblock %}
+
+{% block main %}
+    <h2>Create an appointment for a client</h2>
+    <h3> Time slot:</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Date</th>
+                <th class="text-start">Time</th>
+                <th class="text-start">Service</th>
+                <th class="text-start">Specialist</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in item_to_book %}
+                <tr>
+                    <td class="text-start">{{ row["date"] }}</td>
+                    <td class="text-start">{{ row["time"] }}</td>
+                    <td class="text-start">{{ row["service"] }}</td>
+                    <td class="text-start">{{ row["specialist"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Choose a client:</h3>
+    <form action="/book_by_admin" method="post">
+        <div class="mb-3">
+            <select name="client" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Client</option>
+                {% for client in list_users %}
+                    <option value="{{client['username']}}">{{client['username']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% for row in item_to_book %}
+            <input id="id" name="id" type="hidden" value="{{ row['id'] }}">
+        {% endfor %}
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+
+{% endblock %}

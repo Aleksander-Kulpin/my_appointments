@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete a user
+{% endblock %}
+
+{% block main %}
+<h2>Delete user's account</h2>
+    <h3> User information:</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Name</th>
+                <th class="text-start">Specialist role</th>
+                <th class="text-start">Admin role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in user_delete %}
+                <tr>
+                    <td class="text-start">{{ row["username"] }}</td>
+                    <td class="text-start">{{ row["is_specialist"] }}</td>
+                    <td class="text-start">{{ row["is_admin"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form action="/delete_user" method="post">
+        {% for row in user_delete %}
+            <input id="id" name="id" type="hidden" value="{{ row['id'] }}">
+        {% endfor %}
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+
+{% endblock %}

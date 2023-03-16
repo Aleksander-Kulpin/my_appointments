@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create an appointment
+{% endblock %}
+
+{% block main %}
+    <h2>Create an appointment for a client</h2>
+    <form action="/create_appointment" method="post">
+        <div class="mb-3">
+            <select name="client" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Client</option>
+                {% for client in list_users %}
+                    <option value="{{client['username']}}">{{client['username']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <select name="specialist" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Specialist</option>
+                {% for specialist in list_specialists %}
+                    <option value="{{specialist['firstlast']}}">{{specialist['firstlast']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <select name="service" class="form-select mx-auto w-auto">
+                <option disabled selected value="">Service</option>
+                {% for service in list_services %}
+                    <option value="{{service['name']}}">{{service['name']}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="date">Select a date:</label>
+            <input type="date" id="date" name="date">
+        </div>
+        <div class="mb-3">
+            <label for="appt">Select a time:</label>
+            <input type="time" id="appt" name="appt">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+
+{% endblock %}

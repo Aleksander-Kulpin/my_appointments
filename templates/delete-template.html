@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete a template
+{% endblock %}
+
+{% block main %}
+    <h2>Do you want to delete the template below?</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Day</th>
+                <th class="text-start">Time</th>
+                <th class="text-start">Service</th>
+                <th class="text-start">Specialist</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in item_to_delete %}
+                <tr>
+                    <td class="text-start">{{ row["day"] }}</td>
+                    <td class="text-start">{{ row["time"] }}</td>
+                    <td class="text-start">{{ row["service"] }}</td>
+                    <td class="text-start">{{ row["specialist"] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Confirmation:</h3>
+    <form action="/delete_template" method="post">
+        {% for row in item_to_delete %}
+            <input id="id" name="id" type="hidden" value="{{ row['id'] }}">
+        {% endfor %}
+        <button type="submit" class="btn btn-primary mt-3">Delete</button>
+    </form>
+
+{% endblock %}
